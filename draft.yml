@@ -1,0 +1,64 @@
+models:
+  Game:
+    start: timestamp
+    end: nullable timestamp
+    relationships:
+      hasMany: Deposit, Cashout
+  Player:
+    name: string:200
+    relationships:
+      hasMany: Deposit, Cashout
+  Deposit:
+    amount: decimal:8,2
+    relationships:
+      belongsTo: Game, Player
+  Cashout:
+    amount: decimal:8,2
+    relationships:
+      belongsTo: Game, Player
+controllers:
+  Game:
+    index:
+      query: all
+      render: game.index with:games
+    create:
+      render: game.create
+    store:
+      validate: start
+      save: game
+      redirect: game.index
+
+  Player:
+    index:
+      query: all
+      render: player.index with:players
+    create:
+      render: player.create
+    store:
+      validate: name
+      save: player
+      redirect: player.index
+
+  Deposit:
+    index:
+      query: all
+      render: deposit.index with:desposits
+    create:
+      render: deposit.create
+    store:
+      validate: amount, game_id, player_id,
+      save: deposit
+      redirect: deposit.index
+
+  Cashout:
+    index:
+      query: all
+      render: cashout.index with cashouts
+    create:
+      render: cashout.create
+    store:
+      validate: amount, game_id, player_id
+      save: cashout
+      redirect: cashout.index
+
+      
