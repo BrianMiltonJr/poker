@@ -15,38 +15,40 @@
         <p>End: {{ $game->isFinished() ? $game->end->format('h:i a') : 'N/A'}}</p>
     </div>
     <div>
-        Total Deposits: ${{ $game->getTotalDeposits() }}
+        Total Deposits: {{ $game->getTotalDeposits() }}
     </div>
     <div>
         @php($bigBoy = $game->getBiggestDepositor())
         Biggest Depositor: {{ $bigBoy->name ?? 'N/A' }}
     </div>
-    @php($winners = $game->getWinners())
-    <div class="mt-3 flex">
-        <div>
-            <h4 class="font-semibold text-slate-900">Winners</h4>
-            <div class="flex mt-1">
-                @php($i = 1)
-                @foreach($winners as $winner)
-                    <?php
-                        if ($i === 1) {
-                            $icon = "fas fa-1";
-                            $color = "text-yellow-400";
-                        } else if ($i === 2) {
-                            $icon = "fas fa-2";
-                            $color = 'text-gray-500';
-                        } else {
-                            $icon = "fas fa-3";
-                            $color = 'text-yellow-800';
-                        }
-                        $i++;
-                    ?>
-                <div class="flex items-center space-x-1 {{ $color }}">
-                    <i class="{{ $icon }}"></i>
-                    <p>{{ $winner['player']->name }}</p>
-                <div>
-                @endforeach
+    @if ($game->isFinished())
+        @php($winners = $game->getWinners())
+        <div class="mt-3 flex">
+            <div>
+                <h4 class="font-semibold text-slate-900">Winners</h4>
+                <div class="flex mt-1">
+                    @php($i = 1)
+                    @foreach($winners as $winner)
+                        <?php
+                            if ($i === 1) {
+                                $icon = "fas fa-1";
+                                $color = "text-yellow-400";
+                            } else if ($i === 2) {
+                                $icon = "fas fa-2";
+                                $color = 'text-gray-500';
+                            } else {
+                                $icon = "fas fa-3";
+                                $color = 'text-yellow-800';
+                            }
+                            $i++;
+                        ?>
+                    <div class="flex items-center space-x-1 {{ $color }}">
+                        <i class="{{ $icon }}"></i>
+                        <p>{{ $winner['player']->name }}</p>
+                    <div>
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 </section>

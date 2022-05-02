@@ -28,7 +28,7 @@ class GameController extends Controller
                 );
                 return [
                     'Game Date' => $game->start->format('l, jS F'),
-                    'Total Deposit' => '$' . $game->getTotalDeposits(),
+                    'Total Deposit' => $game->getTotalDeposits(),
                 ];
             }
         );
@@ -69,6 +69,11 @@ class GameController extends Controller
             }
         );
 
+        if (! $game->isFinished()) {
+            $playersTable->addHeaderAction('Deposit Money', route('game.deposit.create', $game));
+            $playersTable->addHeaderAction('End Game', route('game.cashout.create', $game));
+        }
+        
         return view('game.show')->with([
             'game' => $game,
             'playersTable' => $playersTable,

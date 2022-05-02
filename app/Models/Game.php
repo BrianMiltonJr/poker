@@ -59,7 +59,7 @@ class Game extends Model
             return $carry + $deposit->amount;
         });
 
-        return $total > 0 ? $total : 'N/A';
+        return $total > 0 ? '$' . $total : 'N/A';
     }
 
     public function getTotalCashouts()
@@ -68,7 +68,7 @@ class Game extends Model
             return $carry + $cashout->amount;
         });
 
-        return $total > 0 ? $total : 'N/A';
+        return $total > 0 ? '$' . $total : 'N/A';
     }
 
     public function getWinners(): Collection
