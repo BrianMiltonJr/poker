@@ -27,7 +27,7 @@ class DepositFactory extends Factory
         return [
             'game_id' => Game::factory(),
             'player_id' => Player::factory(),
-            'amount' => $this->faker->randomFloat(2, 0, 999999.99),
+            'amount' => $this->faker->randomFloat(2, 0, 999.99),
         ];
     }
 }
