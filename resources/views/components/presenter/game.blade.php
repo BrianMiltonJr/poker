@@ -12,13 +12,14 @@
     </div>
     <div class="flex items-center space-x-2 text-base">
         <p>Start: {{ $game->start->format('h:i a') }}</p>
-        <p>End: {{ $game->end->format('h:i a') }}</p>
+        <p>End: {{ $game->isFinished() ? $game->end->format('h:i a') : 'N/A'}}</p>
     </div>
     <div>
         Total Deposits: {{ $game->getTotalDeposits() }}
     </div>
     <div>
-        Biggest Depositor: {{ $game->getBiggestDepositor()?->name }}
+        @php($bigBoy = $game->getBiggestDepositor())
+        Biggest Depositor: {{ $bigBoy->name ?? 'N/A' }}
     </div>
     @php($winners = $game->getWinners())
     <div class="flex">

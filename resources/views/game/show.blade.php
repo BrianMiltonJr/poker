@@ -3,38 +3,26 @@
 
     @section('content')
         <x-presenter.game gameId="{{ $game->id }}"/>
-        <div>
-            <h5>Players</h5>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Deposits</th>
-                        <th>Cashout</th>
-                        <th>Difference</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($game->getPlayers() as $player)
-                    @php($stats = $player->getGameStats($game))
-                    <tr>
-                        <td>{{ $player->name }}</td>
-                        <td>{{ $stats['deposit'] }}</td>
-                        <td>{{ $stats['cashout'] }}</td>
-                        @if ($game->end === null)
-                            <td>N/A</td>
-                        @else
-                            <td>{{ $stats['difference'] }}</td>
-                        @endif
-                        <td>
-                            <a href="{{ route('player.show', $player) }}">View Player</a>
-                        </td>
-                    </tr> 
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+        <br>
+        <?php
+            $table = new App\View\Components\Table(
+                ['Name', 'Deposits', 'Cashout', 'Difference'],
+                App\Models\Player::where('id', '>', 0),
+                function ($player, $index) use($game) {
+                    $stats = $player->getGameStats($game);
+
+                    $this->addAction($index, 'View Player', route('player.show', $player));
+
+                    return [
+                        $player->name,
+                        $stats['deposit'],
+                        $stats['cashout'],
+                        $game->end !== null ? $stats['difference'] : 'N/A',
+                    ];
+                }
+            )
+        ?>
+        {{ $table->render() }}
         <div>
             @if($game->end === null)
                 <a href="{{ route('game.deposit.create', $game) }}">Deposit Money</a>

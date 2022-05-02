@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GameStoreRequest;
 use App\Models\Game;
+use App\View\Components\Input\Button;
+use App\View\Components\Table;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -14,9 +16,26 @@ class GameController extends Controller
      */
     public function index(Request $request)
     {
-        $games = Game::all();
+        $gamesTable = new Table(
+            ['Game Date', 'Total Deposit'],
+            Game::where('id', '>', 0),
+            function ($game, $index) {
+                $this->addAction(
+                    $index,
+                    'View',
+                    route('game.show', $game),
+                    'blue'
+                );
+                return [
+                    'Game Date' => $game->start->format('l, jS F'),
+                    'Total Deposit' => $game->getTotalDeposits(),
+                ];
+            }
+        );
 
-        return view('game.index', compact('games'));
+        return view('game.index')->with([
+            'gamesTable' => $gamesTable
+        ]);
     }
 
     /**

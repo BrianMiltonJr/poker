@@ -55,16 +55,20 @@ class Game extends Model
 
     public function getTotalDeposits()
     {
-        return $this->deposits->reduce(function ($carry, $deposit) {
+        $total = $this->deposits->reduce(function ($carry, $deposit) {
             return $carry + $deposit->amount;
         });
+
+        return $total > 0 ? $total : 'N/A';
     }
 
     public function getTotalCashouts()
     {
-        return $this->cashouts->reduce(function ($carry, $cashout) {
+        $total = $this->cashouts->reduce(function ($carry, $cashout) {
             return $carry + $cashout->amount;
         });
+
+        return $total > 0 ? $total : 'N/A';
     }
 
     public function getWinners(): Collection
@@ -72,8 +76,11 @@ class Game extends Model
         return $this->getStats()->sortByDesc('difference')->take(3);
     }
 
-    public function getBiggestDepositor(): Player
+    public function getBiggestDepositor(): Player | null
     {
+        if ($this->deposits->count() === 0) {
+            return null;
+        }
         $stats = collect($this->getStats()->reduce(function ($carry, $stat) {
             // dd($stat);
             $playerId = $stat['player']->id;
