@@ -25,7 +25,10 @@
         "@hotwired/stimulus-webpack-helpers": "^1.0.1",
         "@types/axios": "^0.14.0",
         "@types/inputmask": "^5.0.3",
+        "@types/jquery": "^3.5.14",
+        "@types/select2": "^4.0.55",
         "inputmask": "^5.0.7",
+        "jquery": "^3.6.0",
         "select2": "^4.1.0-rc.0",
         "stimulus": "^3.0.1",
         "turbo": "^1.2.6"

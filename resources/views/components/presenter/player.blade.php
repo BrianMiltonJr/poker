@@ -1,4 +1,4 @@
-<section class="container mx-auto bg-white rounded-xl">
+<section class="container mx-auto bg-white rounded-xl p-4">
     <div class="flex items-center space-x-2 text-base">
         <h4 class="font-semibold text-slate-900">{{ $player->name }}</h4>
         <div class="text-sm font-medium">
@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="flex items-center space-x-1 text-base">
-        <h5 class="text-slate-700">All Time High</h5>
+        <h5 class="text-slate-700">All Time Net</h5>
         @php($net = $player->getNet())
         <span
         @if ($net < 0)

@@ -13,6 +13,7 @@ class Table extends Component
     public Collection $data;
     public array $actions;
     public bool $hasActions;
+    public array $headerActions;
     /**
      * Create a new component instance.
      *
@@ -27,14 +28,24 @@ class Table extends Component
 
         $this->data = $models->map($bindedDataMap);
         $this->hasActions = count($this->actions) > 0;
+        $this->headerActions = [];
     }
 
-    public function addAction(int $row, string $title, string $route, string $color = 'blue')
+    public function addAction(int $row, string $title, string $route, string $color = 'gray')
     {
         if (! array_key_exists($row, $this->actions)) {
             $this->actions[$row] = [];
         }
         $this->actions[$row][] = [
+            'title' => $title,
+            'route' => $route,
+            'color' => $color,
+        ];
+    }
+
+    public function addHeaderAction(string $title, string $route, string $color = 'gray')
+    {
+        $this->headerActions[] = [
             'title' => $title,
             'route' => $route,
             'color' => $color,
@@ -53,6 +64,7 @@ class Table extends Component
             'data' => $this->data,
             'actions' => $this->actions,
             'hasActions' => $this->hasActions,
+            'headerActions' => $this->headerActions,
         ]);
     }
 }

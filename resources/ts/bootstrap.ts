@@ -12,6 +12,13 @@ window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
+ * Installs Jquery and its plugins
+ *   -  Select2
+ */
+window.$ = require('jquery');
+window.$.fn.select2 = require('select2');
+
+/**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.

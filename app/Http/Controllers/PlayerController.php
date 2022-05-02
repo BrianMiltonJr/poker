@@ -17,13 +17,14 @@ class PlayerController extends Controller
     public function index(Request $request)
     {
         $playerTable = new Table(
-            ['Name'],
+            ['Name', 'All Time Net'],
             Player::where('id', '>', 0),
             function ($player, $index) {
-                $this->addAction($index, 'View', route('player.show', $player));
+                $this->addAction($index, 'View Player', route('player.show', $player));
 
                 return [
                     $player->name,
+                    '$' . $player->getNet(),
                 ];
             }
         );
@@ -50,12 +51,12 @@ class PlayerController extends Controller
             ['Game', 'Deposited', 'Cashed Out'],
             Game::whereIn('id', $gameIds),
             function ($game, $index) {
-                $this->addAction($index, 'View', route('game.show', $game));
+                $this->addAction($index, 'View Game', route('game.show', $game));
 
                 return [
                     $game->getTableView(),
-                    $game->getTotalDeposits(),
-                    $game->getTotalCashouts(),
+                    '$' . $game->getTotalDeposits(),
+                    '$' . $game->getTotalCashouts(),
                 ];
             }
         );

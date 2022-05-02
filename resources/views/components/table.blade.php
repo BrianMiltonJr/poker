@@ -1,5 +1,10 @@
-<section class="container mx-auto bg-white rounded-xl mt-4">
-    <div class="flex items-center">
+<section class="container mx-auto bg-white rounded-xl mt-4 p-4">
+    <div class="flex flex-col">
+        <div>
+            @foreach ($headerActions as $button)
+            <x-input.button title="{{ $button['title']}}" route="{{ $button['route'] }}" color="{{ $button['color'] }}"/>
+            @endforeach
+        </div>
         <table class="table-auto">
             <thead>
                 <tr>

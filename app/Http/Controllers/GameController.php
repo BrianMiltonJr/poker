@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GameStoreRequest;
 use App\Models\Game;
+use App\Models\Player;
 use App\View\Components\Input\Button;
 use App\View\Components\Table;
 use Illuminate\Http\Request;
@@ -22,16 +23,17 @@ class GameController extends Controller
             function ($game, $index) {
                 $this->addAction(
                     $index,
-                    'View',
-                    route('game.show', $game),
-                    'blue'
+                    'View Game',
+                    route('game.show', $game)
                 );
                 return [
                     'Game Date' => $game->start->format('l, jS F'),
-                    'Total Deposit' => $game->getTotalDeposits(),
+                    'Total Deposit' => '$' . $game->getTotalDeposits(),
                 ];
             }
         );
+
+        $gamesTable->addHeaderAction('Create Game', route('game.create'));
 
         return view('game.index')->with([
             'gamesTable' => $gamesTable
@@ -49,7 +51,28 @@ class GameController extends Controller
 
     public function show(Request $request, Game $game)
     {
-        return view('game.show', compact('game'));
+        $playerIds = $game->getPlayers()->pluck('id');
+        $playersTable = new Table(
+            ['Name', 'Deposits', 'Cashout', 'Difference'],
+            Player::whereIn('id', $playerIds),
+            function ($player, $index) use($game) {
+                $stats = $player->getGameStats($game);
+
+                $this->addAction($index, 'View Player', route('player.show', $player));
+
+                return [
+                    $player->name,
+                    '$' . $stats['deposit'],
+                    '$' . $stats['cashout'],
+                    $game->end !== null ? '$' . $stats['difference'] : 'N/A',
+                ];
+            }
+        );
+
+        return view('game.show')->with([
+            'game' => $game,
+            'playersTable' => $playersTable,
+        ]);
     }
 
     /**

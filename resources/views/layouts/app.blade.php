@@ -13,29 +13,25 @@
         <div class="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-gray-800">
           <h2 class="text-3xl font-semibold text-center text-blue-800">Ole Boys Club</h2>
           <div class="flex flex-col justify-between mt-6">
-            <aside>
-              <ul>
-                <li>
-                  <a class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-400 " href="{{ route('game.index') }}">
-                    <i class="fas fa-diamond"></i>  
-                    <span class="mx-4 font-medium">Games</span>
-                  </a>
-                </li>
+            <ul>
+              <li>
+                <a class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-400 " href="{{ route('game.index') }}">
+                  <i class="fas fa-diamond"></i>  
+                  <span class="mx-4 font-medium">Games</span>
+                </a>
+              </li>
 
-                <li>
-                  <a class="flex items-center px-4 py-2 mt-5 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-400" href="{{ route('player.index') }}">
-                    <i class="fas fa-users"></i>  
-                    <span class="mx-4 font-medium">Players</span>
-                  </a>
-                </li>
-              </ul>
-  
-            </aside>
-            
+              <li>
+                <a class="flex items-center px-4 py-2 mt-5 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-400" href="{{ route('player.index') }}">
+                  <i class="fas fa-users"></i>  
+                  <span class="mx-4 font-medium">Players</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
         <div class="p-4 m-8 overflow-y-auto">
-            <div class="flex items-center justify-center p-2">
+            <div class="flex flex-col items-center justify-center p-2">
                 @yield('content')
             </div>
         </div>
