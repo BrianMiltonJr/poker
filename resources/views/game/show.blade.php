@@ -2,10 +2,7 @@
     @extends('layouts.app')
 
     @section('content')
-        <div>
-            {{-- @dd($game->start) --}}
-            <p>{{ $game->start }}</p>
-        </div>
+        <x-presenter.game gameId="{{ $game->id }}"/>
         <div>
             <h5>Players</h5>
             <table>

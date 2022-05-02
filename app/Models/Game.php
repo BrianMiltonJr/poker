@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Game extends Model
 {
@@ -27,7 +28,7 @@ class Game extends Model
     protected $casts = [
         'id' => 'integer',
         'start' => 'datetime',
-        'end' => 'timestamp',
+        'end' => 'datetime',
     ];
 
     public function deposits()
@@ -64,5 +65,45 @@ class Game extends Model
         return $this->cashouts->reduce(function ($carry, $cashout) {
             return $carry + $cashout->amount;
         });
+    }
+
+    public function getWinners(): Collection
+    {
+        return $this->getStats()->sortByDesc('difference')->take(3);
+    }
+
+    public function getBiggestDepositor(): Player
+    {
+        $stats = collect($this->getStats()->reduce(function ($carry, $stat) {
+            // dd($stat);
+            $playerId = $stat['player']->id;
+            if ($carry === null) {
+                $carry = [];
+            }
+            if (! array_key_exists($playerId, $carry) ) {
+                $carry[$playerId] = [
+                    'deposit' => 0,
+                    'player' => $stat['player'],
+                ];
+            }
+
+            $carry[$playerId]['deposit'] = $carry[$playerId]['deposit'] + $stat['deposit'];
+            return $carry;
+        }));
+
+        return $stats->sortBy('deposit')->last()['player'];
+    }
+
+    public function isSameDay()
+    {
+        $start = $this->start->format('z');
+        $end = $this->end->format('z');
+
+        return $start === $end;
+    }
+
+    public function isFinished()
+    {
+        return $this->end !== null;
     }
 }
