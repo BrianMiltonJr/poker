@@ -16,9 +16,21 @@ class PlayerController extends Controller
      */
     public function index(Request $request)
     {
-        $players = Player::all();
+        $playerTable = new Table(
+            ['Name'],
+            Player::where('id', '>', 0),
+            function ($player, $index) {
+                $this->addAction($index, 'View', route('player.show', $player));
 
-        return view('player.index', compact('players'));
+                return [
+                    $player->name,
+                ];
+            }
+        );
+
+        return view('player.index')->with([
+            'playerTable' => $playerTable,
+        ]);
     }
 
     /**

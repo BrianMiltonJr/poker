@@ -20,6 +20,7 @@
         "typescript": "^4.6.4"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.1.1",
         "@hotwired/stimulus": "^3.0.1",
         "@hotwired/stimulus-webpack-helpers": "^1.0.1",
         "@types/axios": "^0.14.0",
