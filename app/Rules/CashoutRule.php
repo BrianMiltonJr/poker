@@ -43,7 +43,7 @@ class CashoutRule implements Rule
 
         $this->total = $total;
 
-        return (intval($total) === intval($this->game->getTotalDeposits()));
+        return ('$' . $total === $this->game->getTotalDeposits());
     }
 
     /**
