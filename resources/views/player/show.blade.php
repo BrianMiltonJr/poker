@@ -2,9 +2,7 @@
     @extends('layouts.app')
 
     @section('content')
-        <div>
-            {{ $player->name }}
-        </div>
+        <x-presenter.player playerId="{{ $player->id }}"/>
         <div>
             @php($stats = $player->getStats())
             <h5>Games</h5>

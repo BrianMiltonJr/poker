@@ -38,6 +38,18 @@ class Player extends Model
         return $this->hasMany(Cashout::class);
     }
 
+    public function getNet()
+    {
+        return $this->getStats()->reduce(function ($carry, $stat) {
+            return $carry + $stat['difference'];
+        });
+    }
+
+    public function getBestGame()
+    {
+        return $this->getStats()->sortBy('difference')->last()['game'];
+    }
+
     public function getStats(): Collection
     {
         return $this->getGames()->map(function ($val) {
