@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Deposit;
 use App\Models\Game;
 use App\Models\Player;
+use App\View\Components\Input\Select;
 use Illuminate\Http\Request;
 
 class GameDepositController extends Controller
@@ -13,7 +14,16 @@ class GameDepositController extends Controller
     {
         return view('game.deposit.create')->with([
             'game' => $game,
-            'players' => Player::all(),
+            'playerSelect' => new Select(
+                Player::all()->map(function ($player) {
+                    return [
+                        'value' => $player->id,
+                        'title' => $player->name,
+                    ];
+                })->toArray(),
+                'player',
+                'Player'
+            ),
         ]);
     }
 
