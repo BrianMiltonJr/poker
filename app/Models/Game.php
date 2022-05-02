@@ -113,4 +113,9 @@ class Game extends Model
     {
         return $this->end !== null;
     }
+
+    public function getTableView(): string
+    {
+        return $this->start->format('Y-m-d');
+    }
 }

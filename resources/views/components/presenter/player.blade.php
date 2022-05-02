@@ -1,4 +1,4 @@
-<div>
+<section class="container mx-auto bg-white rounded-xl">
     <div class="flex items-center space-x-2 text-base">
         <h4 class="font-semibold text-slate-900">{{ $player->name }}</h4>
         <div class="text-sm font-medium">
@@ -25,4 +25,4 @@
             ${{ $net }}
         </span>
     </div>
-</div>
+</section>

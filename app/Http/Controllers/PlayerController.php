@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PlayerStoreRequest;
+use App\Models\Game;
 use App\Models\Player;
+use App\View\Components\Table;
 use Illuminate\Http\Request;
 
 class PlayerController extends Controller
@@ -30,7 +32,26 @@ class PlayerController extends Controller
 
     public function show(Request $request, Player $player)
     {
-        return view('player.show', compact('player'));
+        $gameIds = $player->deposits()->distinct()->pluck('game_id');
+
+        $playerTable = new Table(
+            ['Game', 'Deposited', 'Cashed Out'],
+            Game::whereIn('id', $gameIds),
+            function ($game, $index) {
+                $this->addAction($index, 'View', route('game.show', $game));
+
+                return [
+                    $game->getTableView(),
+                    $game->getTotalDeposits(),
+                    $game->getTotalCashouts(),
+                ];
+            }
+        );
+
+        return view('player.show')->with([
+            'playerTable' => $playerTable,
+            'player' => $player,
+        ]);
     }
 
     /**

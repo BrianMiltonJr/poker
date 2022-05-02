@@ -3,11 +3,12 @@
 
     @section('content')
         <x-presenter.game gameId="{{ $game->id }}"/>
-        <br>
         <?php
+            $playerIds = $game->getPlayers()->pluck('id');
+
             $table = new App\View\Components\Table(
                 ['Name', 'Deposits', 'Cashout', 'Difference'],
-                App\Models\Player::where('id', '>', 0),
+                App\Models\Player::whereIn('id', $playerIds),
                 function ($player, $index) use($game) {
                     $stats = $player->getGameStats($game);
 

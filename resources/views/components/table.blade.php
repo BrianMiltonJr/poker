@@ -1,4 +1,4 @@
-<section class="container mx-auto bg-white rounded-xl">
+<section class="container mx-auto bg-white rounded-xl mt-4">
     <div class="flex items-center">
         <table class="table-auto">
             <thead>
