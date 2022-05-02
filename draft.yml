@@ -9,10 +9,14 @@ models:
     relationships:
       hasMany: Deposit, Cashout
   Deposit:
+    game_id: foreign:games
+    player_id: foreign:players
     amount: decimal:8,2
     relationships:
       belongsTo: Game, Player
   Cashout:
+    game_id: foreign:games
+    player_id: foreign:players
     amount: decimal:8,2
     relationships:
       belongsTo: Game, Player

@@ -1,0 +1,40 @@
+created:
+    - app/Http/Controllers/GameController.php
+    - app/Http/Controllers/PlayerController.php
+    - app/Http/Controllers/DepositController.php
+    - app/Http/Controllers/CashoutController.php
+    - database/factories/GameFactory.php
+    - database/factories/PlayerFactory.php
+    - database/factories/DepositFactory.php
+    - database/factories/CashoutFactory.php
+    - database/migrations/2022_05_01_234037_create_games_table.php
+    - database/migrations/2022_05_01_234038_create_players_table.php
+    - database/migrations/2022_05_01_234039_create_deposits_table.php
+    - database/migrations/2022_05_01_234040_create_cashouts_table.php
+    - app/Models/Game.php
+    - app/Models/Player.php
+    - app/Models/Deposit.php
+    - app/Models/Cashout.php
+    - tests/Feature/Http/Controllers/GameControllerTest.php
+    - tests/Feature/Http/Controllers/PlayerControllerTest.php
+    - tests/Feature/Http/Controllers/DepositControllerTest.php
+    - tests/Feature/Http/Controllers/CashoutControllerTest.php
+    - app/Http/Requests/GameStoreRequest.php
+    - app/Http/Requests/PlayerStoreRequest.php
+    - app/Http/Requests/DepositStoreRequest.php
+    - app/Http/Requests/CashoutStoreRequest.php
+    - resources/views/game/index.blade.php
+    - resources/views/game/create.blade.php
+    - resources/views/player/index.blade.php
+    - resources/views/player/create.blade.php
+    - resources/views/deposit/index.blade.php
+    - resources/views/deposit/create.blade.php
+    - resources/views/cashout/index.blade.php
+    - resources/views/cashout/create.blade.php
+updated:
+    - routes/web.php
+models:
+    Game: { start: timestamp, end: 'nullable timestamp', relationships: { hasMany: 'Deposit, Cashout' } }
+    Player: { name: 'string:200', relationships: { hasMany: 'Deposit, Cashout' } }
+    Deposit: { game_id: 'foreign:games', player_id: 'foreign:players', amount: 'decimal:8,2', relationships: { belongsTo: 'Game, Player' } }
+    Cashout: { game_id: 'foreign:games', player_id: 'foreign:players', amount: 'decimal:8,2', relationships: { belongsTo: 'Game, Player' } }
