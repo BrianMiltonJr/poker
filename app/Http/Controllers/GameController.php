@@ -19,7 +19,9 @@ class GameController extends Controller
     {
         $gamesTable = new Table(
             ['Game Date', 'Total Deposit'],
+
             Game::where('id', '>', 0),
+            
             function ($game, $index) {
                 $this->addAction(
                     $index,
@@ -27,8 +29,8 @@ class GameController extends Controller
                     route('game.show', $game)
                 );
                 return [
-                    'Game Date' => $game->start->format('l, jS F'),
-                    'Total Deposit' => $game->getTotalDeposits(),
+                    $game->start->format('l, jS F'),
+                    $game->getTotalDeposits(),
                 ];
             }
         );
