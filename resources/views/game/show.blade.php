@@ -5,4 +5,3 @@
         <x-presenter.game gameId="{{ $game->id }}"/>
         {{ $playersTable->render() }}
     @endsection
-
