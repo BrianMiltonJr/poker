@@ -9,6 +9,8 @@ export default class extends ApplicationController {
     declare readonly selectTarget: HTMLSelectElement;
 
     connect() {
-        $(this.selectTarget).select2();
+        $(this.selectTarget).select2({
+            theme: 'bootstrap'
+        });
     }
 }
