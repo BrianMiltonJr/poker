@@ -67,6 +67,26 @@ class Game extends Model
         return $total > 0 ? '$' . $total : 'N/A';
     }
 
+    public function getTotalDepositsByDenomination(): array
+    {
+        return collect($this->deposits->map(function ($deposit) {
+            return json_decode($deposit->schema, true);
+        })->reduce(function ($carry, $obj) {
+            if ($carry === null) {
+                $carry = [];
+            }
+            foreach ($obj as $denomination => $amount) {
+                if (!array_key_exists($denomination, $carry)) {
+                    $carry[$denomination] = 0;
+                }
+
+                $carry[$denomination] += $amount;
+            }
+
+            return $carry;
+        }))->sortKeysDesc()->toArray();
+    }
+
     public function getTotalCashouts()
     {
         $total = $this->cashouts->reduce(function ($carry, $cashout) {
