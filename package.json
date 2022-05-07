@@ -27,6 +27,7 @@
         "@types/inputmask": "^5.0.3",
         "@types/jquery": "^3.5.14",
         "@types/select2": "^4.0.55",
+        "flowbite": "^1.4.5",
         "inputmask": "^5.0.7",
         "jquery": "^3.6.0",
         "select2": "^4.1.0-rc.0",
