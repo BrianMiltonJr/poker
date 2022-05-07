@@ -113,9 +113,11 @@ export default class extends Controller {
         this.bodyTarget.append(data.body);
         if (data.submission !== undefined) {
             this.submissionFunction = data.submission?.bind(this);
-            $(this.submitTarget).show();
+            //@ts-ignore
+            this.modal.show();
         } else {
-            $(this.submitTarget).hide();
+            //@ts-ignore
+            this.modal.hide();
         }
 
         this.lastAnswer = data.lastAnswer;
