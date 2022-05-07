@@ -1,4 +1,5 @@
 //@ts-nocheck
+import "flowbite";
 window._ = require('lodash');
 
 /**
