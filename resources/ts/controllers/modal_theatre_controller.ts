@@ -72,7 +72,11 @@ export default class extends Controller {
             let value = element.value;
 
             if (key !== null && value !== null) {
-                object[key] = value;
+                try {
+                    object[key] = JSON.parse(value);
+                } catch (e) {
+                    object[key] = value;
+                }
             }
         });
 
