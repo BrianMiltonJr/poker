@@ -32,7 +32,8 @@ class GameController extends Controller
                     $game->start->format('l, jS F'),
                     $game->getTotalDeposits(),
                 ];
-            }
+            },
+            'gameIndex'
         );
 
         $gamesTable->addHeaderAction('Create Game', route('game.create'));
