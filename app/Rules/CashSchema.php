@@ -68,6 +68,6 @@ class CashSchema implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'You are using an insufficient Cash Schema';
     }
 }
