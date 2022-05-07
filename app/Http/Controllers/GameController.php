@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GameStoreRequest;
+use App\Models\Chip;
 use App\Models\Game;
 use App\Models\Player;
+use App\Rules\ChipSchema;
 use App\View\Components\Input\Button;
 use App\View\Components\Table;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class GameController extends Controller
 {
@@ -88,7 +91,26 @@ class GameController extends Controller
      */
     public function store(GameStoreRequest $request)
     {
-        $game = Game::create($request->validated());
+        $data = $request->all();
+        $data['chip_schema'] = json_decode($data['chip_schema'], true);
+
+        $validator = Validator::make($data, [
+            'start' => 'required',
+            'chip_schema' => ['required', new ChipSchema()]
+        ]);
+
+        $validated = $validator->validated();
+
+        $game = Game::create([
+            'start' => $validated['start'],
+        ]);
+
+        foreach ($validated['chip_schema'] as $chip) {
+            Chip::create([
+                'game_id' => $game->id,
+                ...$chip,
+            ]);
+        }
 
         return redirect()->route('game.index');
     }

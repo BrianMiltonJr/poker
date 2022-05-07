@@ -46,6 +46,11 @@ class Game extends Model
         return Player::whereIn('id', $this->deposits()->distinct()->pluck('player_id'))->get();
     }
 
+    public function chipTypes()
+    {
+        return $this->hasMany(Chip::class);
+    }
+
     public function getStats()
     {
         return $this->getPlayers()->map(function ($player) {

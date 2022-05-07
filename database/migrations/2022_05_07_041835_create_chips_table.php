@@ -1,10 +1,11 @@
 <?php
 
+use App\Models\Game;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDepositsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +14,14 @@ class CreateDepositsTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-
-        Schema::create('deposits', function (Blueprint $table) {
+        Schema::create('chips', function (Blueprint $table) {
             $table->id();
             $table->foreignId('game_id')->constrained();
-            $table->foreignId('player_id')->constrained();
-            $table->decimal('amount', 8, 2);
-            $table->jsonb('schema');
+            $table->string('color');
+            $table->decimal('denomination');
+            $table->integer('amount');
             $table->timestamps();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -34,6 +31,6 @@ class CreateDepositsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deposits');
+        Schema::dropIfExists('chips');
     }
-}
+};
