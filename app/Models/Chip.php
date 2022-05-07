@@ -33,4 +33,8 @@ class Chip extends Model
     public function game() {
         return $this->belongsTo(Game::class);
     }
+
+    public function chipHandouts() {
+        return $this->hasMany(ChipHandout::class);
+    }
 }
