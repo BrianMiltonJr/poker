@@ -17,7 +17,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 window.$ = require('jquery');
 window.$.fn.select2 = require('select2');
-window.$.fn.DataTable = require('datatables');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
