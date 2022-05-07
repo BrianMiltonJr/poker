@@ -14,10 +14,19 @@
         <p>Start: {{ $game->start->format('h:i a') }}</p>
         <p>End: {{ $game->isFinished() ? $game->end->format('h:i a') : 'N/A'}}</p>
     </div>
+    
+    <div>
+        <h5 class="mt-4">Money by Denominations</h5>
+        @foreach ($game->getTotalDepositsByDenomination() as $denomination => $amount)
+            <p>${{ $denomination }}: {{ $amount }} (${{$amount * floatval($denomination)}})</p>
+        @endforeach
+    </div>
+
     <div>
         Total Deposits: {{ $game->getTotalDeposits() }}
     </div>
-    <div>
+
+    <div class="mt-4">
         @php($bigBoy = $game->getBiggestDepositor())
         Biggest Depositor: {{ $bigBoy->name ?? 'N/A' }}
     </div>
