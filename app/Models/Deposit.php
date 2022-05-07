@@ -17,6 +17,7 @@ class Deposit extends Model
     protected $fillable = [
         'game_id',
         'player_id',
+        'schema',
         'amount',
     ];
 

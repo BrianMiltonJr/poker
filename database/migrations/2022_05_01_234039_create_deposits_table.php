@@ -20,6 +20,7 @@ class CreateDepositsTable extends Migration
             $table->foreignId('game_id')->constrained();
             $table->foreignId('player_id')->constrained();
             $table->decimal('amount', 8, 2);
+            $table->jsonb('schema');
             $table->timestamps();
         });
 
