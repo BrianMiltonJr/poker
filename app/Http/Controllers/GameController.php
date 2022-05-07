@@ -33,6 +33,7 @@ class GameController extends Controller
                     $game->getTotalDeposits(),
                 ];
             },
+            [],
             'gameIndex'
         );
 

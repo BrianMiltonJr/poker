@@ -12,40 +12,46 @@ use Illuminate\View\Component;
 class Table extends Component
 {
     public array $columns;
-    public Collection $data;
+    public array $searchableColumns;
+    private Collection $data;
     public array $actions;
     public bool $hasActions;
     public array $headerActions;
-    public LengthAwarePaginator $paginator;
+    private LengthAwarePaginator $paginator;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(array $headers, Builder $query, Closure $dataMap, string $tableIdentifier = 'page', int $rows = 15)
-    {
+    public function __construct(
+        array $headers,
+        Builder $query,
+        Closure $dataMap,
+        array $searchableColumns = [],
+        string $tableIdentifier = 'page',
+        int $rows = 15
+    ) {
         $this->columns = $headers;
-
+        $this->searchableColumns = $searchableColumns;
         $requestQuery = Request::query();
-        
 
-        if (array_key_exists('searchParams', $requestQuery)) {
-            $query = $this->laceSearchParams($requestQuery['searchParams'], $query);
+        if (array_key_exists('search', $requestQuery)) {
+            $query = $this->laceSearchParams($requestQuery['search'], $searchableColumns, $query);
         }
         $models = $query->paginate($rows, ['*'], $tableIdentifier);
         $this->actions = [];
         $bindedDataMap = Closure::bind($dataMap, $this);
 
-
-        
         $this->paginator = $models;
         $this->data = collect($models->items())->map($bindedDataMap);
         $this->hasActions = count($this->actions) > 0;
         $this->headerActions = [];
     }
 
-    private function laceSearchParams(string $params, Builder $query): Builder {
-        $wheres = $query->getQuery()->wheres;
+    private function laceSearchParams(string $param, array $searchableColumns, Builder $query): Builder {
+        foreach ($searchableColumns as $searchableColumn) {
+            $query->where($searchableColumn, 'LIKE', "%$param%");
+        }
         return $query;
     }
 
@@ -84,6 +90,7 @@ class Table extends Component
             'hasActions' => $this->hasActions,
             'headerActions' => $this->headerActions,
             'paginator' => $this->paginator,
+            'searchableColumns' => $this->searchableColumns,
         ]);
     }
 }

@@ -27,6 +27,7 @@ class PlayerController extends Controller
                     '$' . $player->getNet(),
                 ];
             },
+            ['name'],
             'playerIndex'
         );
 

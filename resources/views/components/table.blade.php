@@ -9,10 +9,15 @@
             @endforeach
         </div>
 
-        <div class="mb-4">
-            <label>Search</label>
-            <input type="text" data-table-target="searchParams"/>
-            <button data-table-target="searchButton">Search for Results</button>
+        <div 
+            @if(count($searchableColumns) === 0)
+            hidden
+            @endif
+            class="mb-4"
+        >
+            <label class="block text-gray-700 text-sm font-bold mb-2">Search</label>
+            <input class="shadow appearance-none border rounded w-half py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" data-table-target="searchParams"/>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" data-table-target="searchButton">Search for Results</button>
         </div>
 
         <table data-table-target="table" class="table-auto">
@@ -55,7 +60,7 @@
             $perPage = $paginator->perPage();
             
             $start = (($pageNumber * $perPage) - $perPage) + 1;
-            $end = ($pageNumber * ($perPage));
+            $end = (($pageNumber - 1) * ($perPage)) + $count;
         ?>
         {{ $start }} to {{ $end }} of {{ $paginator->total() }}
     </div>

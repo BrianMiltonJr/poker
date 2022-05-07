@@ -1,3 +1,4 @@
+import { param } from "jquery";
 import { ApplicationController } from "./ApplicationController";
 
 export default class extends ApplicationController {
@@ -25,7 +26,25 @@ export default class extends ApplicationController {
 
     search(event: Event) {
         let parameter = this.searchParamsTarget.value;
+        let newParameters: string = "?";
+        if (location.search === '') {
+            newParameters += `search=${parameter}`;
+        } else {
+            let oldParameterRaw = location.search.replace("?", "").split("&");
+            for (let i = 0; i < oldParameterRaw.length; i++) {
+                let slice = oldParameterRaw[i].split("=");
+                if (i > 0) {
+                    newParameters += "&";
+                }
+    
+                if (slice[0] !== 'search') {
+                    newParameters += `${slice[0]}=${slice[1]}`;
+                } else {
+                    newParameters += `search=${parameter}`;
+                }
+            }
+        }
 
-        window.location.href = window.location.href + `?search=${parameter}`;
+        location.href = location.origin + location.pathname + newParameters;
     }
 }
