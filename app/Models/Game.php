@@ -121,6 +121,6 @@ class Game extends Model
 
     public function getTableView(): string
     {
-        return $this->start->format('Y-m-d');
+        return $this->start->format('l, jS F');
     }
 }

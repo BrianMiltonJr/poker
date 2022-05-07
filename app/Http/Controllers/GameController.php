@@ -32,7 +32,7 @@ class GameController extends Controller
                     route('game.show', $game)
                 );
                 return [
-                    $game->start->format('l, jS F'),
+                    $game->getTableView(),
                     $game->getTotalDeposits(),
                 ];
             }
