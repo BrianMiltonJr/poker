@@ -94,6 +94,10 @@ export default class extends ApplicationController {
             chipsToHandout[cutter[key]['color']] = chipAmount;
         }
 
+        this.createModal(chipsToHandout);
+    }
+
+    private createModal(chipsToHandout) {
         let table = this.createChipTableView(chipsToHandout);
 
         let body = Builder.wrapForEvent(
@@ -163,7 +167,6 @@ export default class extends ApplicationController {
         this.modalTheatre.dispatchEvent(new CustomEvent('insertThenOpen', {
             detail: insertEvent
         }));
-
     }
 
     private createChipTableView(chipsToHandout): HTMLTableElement {
