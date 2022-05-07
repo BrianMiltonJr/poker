@@ -25,7 +25,6 @@ class CashSchema implements Rule
      */
     public function passes($attribute, $bundle)
     {
-        return true;
         $denominations =[
             ".25",
             "1",
@@ -48,16 +47,14 @@ class CashSchema implements Rule
             }
         }
 
-        $chipsToHandOut = $bundle['chips-to-hand-out'];
+        $chipsToHandOut = $bundle['chips-to-handout'];
 
         $types = [
             'color', 'denomination', 'amount'
         ];
-        foreach ($bundle as $value) {
-            foreach ($types as $type) {
-                if (!array_key_exists($type, $value) || gettype($value[$type]) !== 'string') {
-                    return false;
-                }
+        foreach ($types as $type) {
+            if (!array_key_exists($type, $chipsToHandOut) || gettype($chipsToHandOut[$type]) !== 'integer') {
+                return false;
             }
         }
 
