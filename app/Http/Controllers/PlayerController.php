@@ -57,8 +57,8 @@ class PlayerController extends Controller
 
                 return [
                     $game->getTableView(),
-                    '$' . $game->getTotalDeposits(),
-                    '$' . $game->getTotalCashouts(),
+                    $game->getTotalDeposits(),
+                    $game->getTotalCashouts(),
                 ];
             }
         );

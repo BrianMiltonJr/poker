@@ -46,6 +46,11 @@ class Game extends Model
         return Player::whereIn('id', $this->deposits()->distinct()->pluck('player_id'))->get();
     }
 
+    public function chipTypes()
+    {
+        return $this->hasMany(Chip::class);
+    }
+
     public function getStats()
     {
         return $this->getPlayers()->map(function ($player) {
@@ -60,6 +65,26 @@ class Game extends Model
         });
 
         return $total > 0 ? '$' . $total : 'N/A';
+    }
+
+    public function getTotalDepositsByDenomination(): array
+    {
+        return collect($this->deposits->map(function ($deposit) {
+            return json_decode($deposit->schema, true);
+        })->reduce(function ($carry, $obj) {
+            if ($carry === null) {
+                $carry = [];
+            }
+            foreach ($obj as $denomination => $amount) {
+                if (!array_key_exists($denomination, $carry)) {
+                    $carry[$denomination] = 0;
+                }
+
+                $carry[$denomination] += $amount;
+            }
+
+            return $carry;
+        }))->sortKeysDesc()->toArray();
     }
 
     public function getTotalCashouts()
@@ -116,6 +141,6 @@ class Game extends Model
 
     public function getTableView(): string
     {
-        return $this->start->format('Y-m-d');
+        return $this->start->format('l, jS F');
     }
 }

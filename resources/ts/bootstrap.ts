@@ -1,4 +1,8 @@
 //@ts-nocheck
+import "flowbite";
+import { Builder } from "./ModalFormBuilder/builder";
+
+window.ModalFormBuilder = Builder;
 window._ = require('lodash');
 
 /**

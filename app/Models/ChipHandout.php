@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Deposit extends Model
+class ChipHandout extends Model
 {
     use HasFactory;
 
@@ -15,9 +15,8 @@ class Deposit extends Model
      * @var array
      */
     protected $fillable = [
-        'game_id',
-        'player_id',
-        'schema',
+        'chip_id',
+        'deposit_id',
         'amount',
     ];
 
@@ -28,23 +27,13 @@ class Deposit extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'game_id' => 'integer',
-        'player_id' => 'integer',
-        'amount' => 'decimal:2',
     ];
 
-    public function game()
-    {
-        return $this->belongsTo(Game::class);
+    public function chip() {
+        return $this->belongsTo(Chip::class);
     }
 
-    public function player()
-    {
-        return $this->belongsTo(Player::class);
-    }
-
-    public function chipHandouts()
-    {
-        return $this->hasMany(ChipHandout::class);
+    public function deposit() {
+        return $this->belongsTo(Deposit::class);
     }
 }

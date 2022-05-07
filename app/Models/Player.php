@@ -70,7 +70,7 @@ class Player extends Model
             'game' => $game,
             'player' => $this,
             'deposit' => $deposits,
-            'cashout' => $cashouts,
+            'cashout' => $cashouts ?? 0,
             'difference' => $cashouts - $deposits,
         ]);
     }
