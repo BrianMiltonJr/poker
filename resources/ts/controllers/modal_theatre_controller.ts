@@ -4,7 +4,7 @@ interface AnswerObject {
     [k: string]: string
 }
 
-interface InsertEvent {
+export interface InsertEvent {
     title: string,
     body: HTMLElement,
     submission?: (data: AnswerObject) => void,

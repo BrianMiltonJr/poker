@@ -1,24 +1,4 @@
-<div data-controller="modal-theatre" id="modal-theatre" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 data-modal-theatre-target="title"></h5>
-                <button type="button" class="close" data-modal-theatre-target="crossClose" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div data-modal-theatre-target="body" class="modal-body">
-                
-            </div>
-            <div class="modal-footer">
-                <button data-modal-theatre-target="submit" type="button" class="btn btn-primary">Save Changes</button>
-                <button type="button" class="btn btn-danger" data-modal-theatre-target="buttonClose">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div data-controller="modal-theatre" data-modal-placement="center" id="modal-theatre" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+<div data-controller="modal-theatre" id="modal-theatre" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
