@@ -3,7 +3,7 @@
     data-input--cash-counter-chip-amounts-value="{{ $chipAmounts }}"
     >
     <div class="mb-4">
-        <input type="" data-input--cash-counter-target="output" name="depositSchema"/>
+        <input type="hidden" data-input--cash-counter-target="output" name="depositSchema"/>
         <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
             Amount <span data-input--cash-counter-target="total"></span>
         </label>
