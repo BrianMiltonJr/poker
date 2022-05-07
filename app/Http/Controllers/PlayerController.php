@@ -26,7 +26,9 @@ class PlayerController extends Controller
                     $player->name,
                     '$' . $player->getNet(),
                 ];
-            }
+            },
+            ['name'],
+            'playerIndex'
         );
 
         return view('player.index')->with([
